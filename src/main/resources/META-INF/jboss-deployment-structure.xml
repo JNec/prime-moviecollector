@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+http://stackoverflow.com/questions/12039763/use-my-log4j-under-jboss-6
+-Dorg.jboss.as.logging.per-deployment=false
+ -->
+<jboss-deployment-structure>
+  <deployment>
+    <exclusions>
+        <module name="org.apache.log4j" />
+        <module name="org.apache.commons.logging" />
+    </exclusions>
+  </deployment>
+</jboss-deployment-structure>

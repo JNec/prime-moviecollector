@@ -7,13 +7,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import javax.persistence.criteria.CriteriaQuery;
 import org.primefaces.examples.moviecollector.domain.Movie;
-import org.primefaces.model.SortOrder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class MovieDAOWithJPA implements MovieDAO {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(MovieDAOWithJPA.class);
 
 	@PersistenceContext
 	protected EntityManager entityManager;
@@ -31,6 +33,7 @@ public class MovieDAOWithJPA implements MovieDAO {
 	}
 
 	public void persist(Movie movie) {
+		LOGGER.debug("persist:"+movie);
 		entityManager.persist(movie);
 	}
 

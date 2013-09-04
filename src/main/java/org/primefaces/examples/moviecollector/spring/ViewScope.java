@@ -10,9 +10,9 @@ import org.springframework.beans.factory.config.Scope;
 public class ViewScope implements Scope {
 
 	public Object get(String name, ObjectFactory objectFactory) {
-		Map<String,Object> viewMap = FacesContext.getCurrentInstance().getViewRoot().getViewMap();
+		Map<String, Object> viewMap = FacesContext.getCurrentInstance().getViewRoot().getViewMap();
 
-		if(viewMap.containsKey(name)) {
+		if (viewMap.containsKey(name)) {
 			return viewMap.get(name);
 		} else {
 			Object object = objectFactory.getObject();
@@ -31,7 +31,7 @@ public class ViewScope implements Scope {
 	}
 
 	public void registerDestructionCallback(String name, Runnable callback) {
-		//Not supported
+		// Not supported
 	}
 
 	public Object resolveContextualObject(String key) {
