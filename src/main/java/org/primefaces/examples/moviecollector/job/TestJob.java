@@ -3,6 +3,7 @@ package org.primefaces.examples.moviecollector.job;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.primefaces.examples.moviecollector.jms.JMSClient;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
@@ -25,7 +26,8 @@ public class TestJob extends QuartzJobBean {
 	protected void executeInternal(JobExecutionContext ctx) throws JobExecutionException {
 		try {
 			LOGGER.info("test cron...");
-			System.out.println("this is a test cron....");
+			JMSClient.sendTextMessageToQueue("hello....");
+			//System.out.println("this is a test cron....");
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 		}

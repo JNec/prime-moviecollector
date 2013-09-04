@@ -24,7 +24,7 @@ public class ExampleJob extends QuartzJobBean {
 		// do the actual work
 		LOGGER.info("test cron...");
 		LOGGER.info("timeout:"+timeout);
-		System.out.println("executeInternal....");
-		System.out.println("timeout:"+timeout);
+		//System.out.println("executeInternal....");
+		//System.out.println("timeout:"+timeout);
 	}
 }
