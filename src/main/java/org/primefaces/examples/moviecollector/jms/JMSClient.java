@@ -1,7 +1,5 @@
 package org.primefaces.examples.moviecollector.jms;
 
-import java.util.Random;
-
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
