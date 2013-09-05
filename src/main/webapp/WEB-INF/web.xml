@@ -73,6 +73,38 @@
 		<url-pattern>*.jsf</url-pattern>
 	</servlet-mapping>
 	
+	<!--
+		Define the Spring WS Servlet. The 'transformWsldLocations' param means
+		that any WSDLs generated are context-aware and contain the correct
+		path to their exposed port types. The 'contextConfigLocation' param
+		with an empty value means that the Spring context won't try to load
+		a file called webservices-servlet.xml
+	-->
+	<servlet>
+		<servlet-name>webservices</servlet-name>
+		<servlet-class>org.springframework.ws.transport.http.MessageDispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>transformWsdlLocations</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value></param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>webservices</servlet-name>
+		<url-pattern>*.wsdl</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>webservices</servlet-name>
+		<url-pattern>/endpoints/*</url-pattern>
+	</servlet-mapping>
+		
+	
 	<!-- 
 	for jboss 6.1 EAP
 		see http://stackoverflow.com/questions/10020447/error-deploying-primefaces-application-on-jboss-7-1-0 

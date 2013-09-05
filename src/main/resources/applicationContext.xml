@@ -5,6 +5,7 @@
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:security="http://www.springframework.org/schema/security"
 	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:sws="http://www.springframework.org/schema/web-services"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
            http://www.springframework.org/schema/tx
@@ -13,12 +14,15 @@
            http://www.springframework.org/schema/context/spring-context-3.0.xsd
            http://www.springframework.org/schema/lang
            http://www.springframework.org/schema/lang/spring-lang-3.0.xsd
+           http://www.springframework.org/schema/web-services
+		   http://www.springframework.org/schema/web-services/web-services-2.0.xsd
            http://www.springframework.org/schema/security
-           http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
+           http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
 	<context:property-placeholder location="classpath:application.properties"/>
 	<context:component-scan base-package="org.primefaces.examples.moviecollector" />
 	<tx:annotation-driven transaction-manager="txManager"/>
+	<sws:annotation-driven />
 	
 	<bean id="entityManagerFactory"  
 	      class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">  
@@ -56,7 +60,11 @@
 
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+	
+	<!-- UNPROTECTED RESOURCES -->
+	<security:http pattern="/endpoints/**" security="none"/>
 
+	<!-- PROTECTED RESOURCES -->
 	<security:http auto-config='true'>
     	<security:intercept-url pattern="/**" access="ROLE_USER" />
     	<security:logout logout-url="/logout" logout-success-url="/"/>
@@ -92,7 +100,7 @@
 		<!-- 10 seconds -->
 	  <property name="startDelay" value="10000"/>
 		<!-- repeat every 20 seconds -->
-	  <property name="repeatInterval" value="20000"/>
+	  <property name="repeatInterval" value="60000"/>
 	</bean>
 	<!-- /////////////////////////////////////////////////////////////////////////////////// -->
 	<!-- ////////// JOBS /////////////////// -->
@@ -108,6 +116,26 @@
 	    </map>
 	  </property>
 	</bean>
+	
+	<!--
+		Web Services (Soap)
+	-->
+	<bean id="MovieDetailsService" class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition" 
+			lazy-init="true">
+        <property name="schemaCollection">
+            <bean class="org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection">
+                <property name="inline" value="true" />
+                <property name="xsds">
+                    <list>
+                        <value>schemas/MovieDetailsServiceOperations.xsd</value>
+                    </list>
+                </property>
+            </bean>
+        </property>
+        <property name="portTypeName" value="MovieDetailsService"/>
+        <property name="serviceName" value="MovieDetailsServices" />
+        <property name="locationUri" value="/endpoints"/>
+    </bean>
 		
     
 </beans>

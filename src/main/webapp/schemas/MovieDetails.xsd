@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns="http://ws.moviecollector.examples.primefaces.org"
+	targetNamespace="http://ws.moviecollector.examples.primefaces.org"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="Movie" type="Movie" />
+	<xs:complexType name="Movie">
+		<xs:sequence>
+			<xs:element name="MovieId" type="xs:integer" />
+			<xs:element name="MovieTitle" type="xs:string" />
+			<xs:element name="MovieDiscs" type="xs:integer" />
+			<xs:element name="MovieDescription" type="xs:string" />
+			<xs:element name="MovieFormat" type="EnumMovieFormat" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="EnumMovieFormat">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DVD" />
+			<xs:enumeration value="BLURAY" />
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>  

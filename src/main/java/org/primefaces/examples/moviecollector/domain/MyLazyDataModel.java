@@ -6,6 +6,7 @@ package org.primefaces.examples.moviecollector.domain;
 
 import java.util.List;
 import java.util.Map;
+
 import org.primefaces.examples.moviecollector.service.MovieService;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;

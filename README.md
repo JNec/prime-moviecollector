@@ -24,3 +24,7 @@ Changes from the original Source
 		 
 * Adding  <distributable/> in order to support clustering
  
+Spring Web Services Tutorials
+------------
+* http://briansjavablog.blogspot.com/2013/01/spring-web-services-tutorial.html 
+* https://github.com/briansjavablog/spring-webservices-tutorial   

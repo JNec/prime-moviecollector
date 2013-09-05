@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://org/primefaces/examples/moviecollector/ws/movieservice"
+	xmlns:movie="http://ws.moviecollector.examples.primefaces.org"
+	targetNamespace="http://org/primefaces/examples/moviecollector/ws/movieservice"
+	elementFormDefault="qualified">
+	<xsd:import namespace="http://ws.moviecollector.examples.primefaces.org"
+		schemaLocation="MovieDetails.xsd" />
+	<xsd:element name="MovieDetailsRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="id" type="xsd:integer" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="MovieDetailsResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="MovieDetails" type="movie:Movie" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema> 
