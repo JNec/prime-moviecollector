@@ -12,17 +12,11 @@
 	</context-param>
 
 	<listener>
-		<listener-class>
-			org.springframework.web.context.ContextLoaderListener
-		</listener-class>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	
 	<listener>
-		<listener-class>
-			org.springframework.web.context.request.RequestContextListener
-		</listener-class>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
 	</listener>
-
     <listener>
         <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
     </listener>
@@ -108,13 +102,12 @@
 	<!-- 
 	for jboss 6.1 EAP
 		see http://stackoverflow.com/questions/10020447/error-deploying-primefaces-application-on-jboss-7-1-0 
-	 
-	 -->  
+	
 	<context-param>
 	    <param-name>org.jboss.jbossfaces.WAR_BUNDLES_JSF_IMPL</param-name>
 	    <param-value>true</param-value>
 	</context-param>
-	 
+	-->     
 	 
 
 </web-app>
