@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:security="http://www.springframework.org/schema/security"
-	xmlns:lang="http://www.springframework.org/schema/lang"
-	xmlns:sws="http://www.springframework.org/schema/web-services"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:lang="http://www.springframework.org/schema/lang" xmlns:sws="http://www.springframework.org/schema/web-services"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
            http://www.springframework.org/schema/tx
@@ -19,68 +16,79 @@
            http://www.springframework.org/schema/security
            http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
-	<context:property-placeholder location="classpath:application.properties"/>
+	<context:property-placeholder location="classpath:application.properties" />
 	<context:component-scan base-package="org.primefaces.examples.moviecollector" />
-	<tx:annotation-driven transaction-manager="txManager"/>
+	<tx:annotation-driven transaction-manager="txManager" />
 	<sws:annotation-driven />
-	
-	<bean id="entityManagerFactory"  
-	      class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">  
-         <property name="persistenceUnitName" value="prime-moviecollector"/>  
-         <property name="dataSource" ref="dataSource" />  
-         <property name="jpaVendorAdapter">  
-             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">  
-                 <property name="databasePlatform" value="${database.target}"/>  
-                 <property name="showSql" value="${database.showSql}" />  
-                 <property name="generateDdl" value="${database.generateDdl}" />  
-             </bean>  
-         </property>  
-    </bean>  
-	
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${database.driver}"/>
-        <property name="url" value="${database.url}"/>
-        <property name="username" value="${database.username}"/>
-        <property name="password" value="${database.password}"/>
-    </bean>
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitName" value="prime-moviecollector" />
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="databasePlatform" value="${database.target}" />
+				<property name="showSql" value="${database.showSql}" />
+				<property name="generateDdl" value="${database.generateDdl}" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${database.driver}" />
+		<property name="url" value="${database.url}" />
+		<property name="username" value="${database.username}" />
+		<property name="password" value="${database.password}" />
+	</bean>
 
 	<bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-    
-    <bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
-        <property name="scopes">
-            <map>
-                <entry key="view">
-                    <bean class="org.primefaces.examples.moviecollector.spring.ViewScope"/>
-                </entry>
-            </map>
-        </property>
-    </bean>
 
-    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
-	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
-	
+	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+		<property name="scopes">
+			<map>
+				<entry key="view">
+					<bean class="org.primefaces.examples.moviecollector.spring.ViewScope" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
 	<!-- UNPROTECTED RESOURCES -->
-	<security:http pattern="/endpoints/**" security="none"/>
+	<security:http pattern="/endpoints/**" security="none" />
 
 	<!-- PROTECTED RESOURCES -->
 	<security:http auto-config='true'>
-    	<security:intercept-url pattern="/**" access="ROLE_USER" />
-    	<security:logout logout-url="/logout" logout-success-url="/"/>
-  	</security:http>
-  	
-    <security:authentication-manager>
-        <security:authentication-provider>
-            <security:user-service>
-                <security:user name="prime" password="faces" authorities="ROLE_USER" />
-            </security:user-service>
-        </security:authentication-provider>
-    </security:authentication-manager>
-    
-    <!-- /////////////////////////////////////////////////////////////////////////////////// -->
+		<security:intercept-url pattern="/**" access="ROLE_USER" />
+		<security:logout logout-url="/logout"
+			logout-success-url="/" />
+	</security:http>
+
+	<security:authentication-manager>
+		<security:authentication-provider>
+			<security:user-service>
+				<security:user name="prime" password="faces"
+					authorities="ROLE_USER" />
+			</security:user-service>
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+	<!-- /////////////////////////////////////////////////////////////////////////////////// -->
 	<!-- ////////// TRIGGERS /////////////////// -->
 	<!-- /////////////////////////////////////////////////////////////////////////////////// -->
+	<!-- 
+	tener en cuenta la sincronizacion de relojes entre las maquinas del cluster
+	
+	http://gravspace.wordpress.com/2011/03/07/quartz-scheduling-spring-hibernate-and-clustering-here-be-dragons/ 
+	http://java-x.blogspot.com/2006/12/using-quartz-scheduler-in-cluster.html
+	-->
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
@@ -88,54 +96,88 @@
 				<ref bean="testTrigger" />
 			</list>
 		</property>
+		<property name="quartzProperties">
+			<props>
+				<prop key="org.quartz.scheduler.instanceName">InstanceNameX</prop>
+				<prop key="org.quartz.scheduler.instanceId">AUTO</prop>
+				<prop key="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</prop>
+				<prop key="org.quartz.threadPool.threadCount">3</prop>
+				<prop key="org.quartz.threadPool.threadPriority">5</prop>
+				<prop key="org.quartz.jobStore.misfireThreshold">60000</prop>
+				<prop key="org.quartz.jobStore.class">org.quartz.impl.jdbcjobstore.JobStoreTX</prop>
+				<prop key="org.quartz.jobStore.driverDelegateClass">org.quartz.impl.jdbcjobstore.PostgreSQLDelegate</prop>
+				<prop key="org.quartz.jobStore.useProperties">false</prop>
+				<prop key="org.quartz.jobStore.dataSource">myDS</prop>
+				<prop key="org.quartz.jobStore.tablePrefix">QRTZ_</prop>
+				<prop key="org.quartz.jobStore.isClustered">true</prop>
+				<prop key="org.quartz.jobStore.clusterCheckinInterval">20000</prop>
+				<prop key="org.quartz.dataSource.myDS.driver">org.postgresql.Driver</prop>
+				<prop key="org.quartz.dataSource.myDS.URL">jdbc:postgresql://localhost:5432/moviecollector</prop>
+				<prop key="org.quartz.dataSource.myDS.user">moviecollector</prop>
+				<prop key="org.quartz.dataSource.myDS.password">moviecollector</prop>
+				<prop key="org.quartz.dataSource.myDS.maxConnections">5</prop>
+				<prop key="org.quartz.dataSource.myDS.validationQuery">SELECT now()</prop>
+				<!--  
+				<prop key="org.quartz.dataSource.myDS.validationQuery">select 0 from dual</prop>
+				-->
+				 
+			</props>
+		</property>
 	</bean>
+
+
+
+
+
 	<bean id="testTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="testJob" />
 		<property name="cronExpression" value="${cron.test}" />
 	</bean>
-	
+
 	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
-	  <!-- see the example of method invoking job above -->
-	  <property name="jobDetail" ref="exampleJob"/>
+		<!-- see the example of method invoking job above -->
+		<property name="jobDetail" ref="exampleJob" />
 		<!-- 10 seconds -->
-	  <property name="startDelay" value="10000"/>
+		<property name="startDelay" value="10000" />
 		<!-- repeat every 20 seconds -->
-	  <property name="repeatInterval" value="60000"/>
+		<property name="repeatInterval" value="60000" />
 	</bean>
 	<!-- /////////////////////////////////////////////////////////////////////////////////// -->
 	<!-- ////////// JOBS /////////////////// -->
 	<!-- /////////////////////////////////////////////////////////////////////////////////// -->
 	<bean name="testJob" class="org.springframework.scheduling.quartz.JobDetailBean">
-		<property name="jobClass" value="org.primefaces.examples.moviecollector.job.TestJob" />
+		<property name="jobClass"
+			value="org.primefaces.examples.moviecollector.job.TestJob" />
 	</bean>
 	<bean name="exampleJob" class="org.springframework.scheduling.quartz.JobDetailBean">
-	  <property name="jobClass" value="org.primefaces.examples.moviecollector.job.ExampleJob"/>
-	  <property name="jobDataAsMap">
-	    <map>
-	      <entry key="timeout" value="5"/>
-	    </map>
-	  </property>
+		<property name="jobClass"
+			value="org.primefaces.examples.moviecollector.job.ExampleJob" />
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="timeout" value="5" />
+			</map>
+		</property>
 	</bean>
-	
-	<!--
-		Web Services (Soap)
-	-->
-	<bean id="MovieDetailsService" class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition" 
-			lazy-init="true">
-        <property name="schemaCollection">
-            <bean class="org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection">
-                <property name="inline" value="true" />
-                <property name="xsds">
-                    <list>
-                        <value>schemas/MovieDetailsServiceOperations.xsd</value>
-                    </list>
-                </property>
-            </bean>
-        </property>
-        <property name="portTypeName" value="MovieDetailsService"/>
-        <property name="serviceName" value="MovieDetailsServices" />
-        <property name="locationUri" value="/endpoints"/>
-    </bean>
-		
-    
+
+	<!-- Web Services (Soap) -->
+	<bean id="MovieDetailsService"
+		class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition"
+		lazy-init="true">
+		<property name="schemaCollection">
+			<bean
+				class="org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection">
+				<property name="inline" value="true" />
+				<property name="xsds">
+					<list>
+						<value>schemas/MovieDetailsServiceOperations.xsd</value>
+					</list>
+				</property>
+			</bean>
+		</property>
+		<property name="portTypeName" value="MovieDetailsService" />
+		<property name="serviceName" value="MovieDetailsServices" />
+		<property name="locationUri" value="/endpoints" />
+	</bean>
+
+
 </beans>
