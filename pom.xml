@@ -231,20 +231,27 @@
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
-			<version>3.2</version>
+			<version>3.5</version>
 		</dependency>
 		
-		<!-- <dependency> <groupId>com.sun.faces</groupId> <artifactId>jsf-api</artifactId> 
-			<version>2.0.4-b09</version> </dependency> <dependency> <groupId>com.sun.faces</groupId> 
-			<artifactId>jsf-impl</artifactId> <version>2.0.4-b09</version> </dependency> -->
-		<!-- JSF: Mojarra http://javaserverfaces.java.net/download.html -->
+		<!--  
+		<dependency> <groupId>com.sun.faces</groupId> 
+		<artifactId>jsf-api</artifactId> 
+			<version>2.0.4-b09</version> </dependency> 
+		<dependency> <groupId>com.sun.faces</groupId> 
+			<artifactId>jsf-impl</artifactId> <version>2.0.4-b09</version> 
+		</dependency> 
+		-->
 		
+		<!-- JSF: Mojarra http://javaserverfaces.java.net/download.html  -->
 		<dependency>
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.faces</artifactId>
-			<version>2.1.7</version>
+			<version>2.2.1</version>
 			<scope>compile</scope>
 		</dependency>
+		
+		
 
 		<dependency>
 			<groupId>postgresql</groupId>
@@ -267,7 +274,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>3.5.1-Final</version>
+			<version>4.1.0.Final</version>
 		</dependency>
 
 		<!-- <dependency> <groupId>hsqldb</groupId> <artifactId>hsqldb</artifactId> 
@@ -305,12 +312,14 @@
 			<artifactId>jboss-as-ejb-client-bom</artifactId>
 			<version>7.1.0.Final</version>
 			<type>pom</type>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.as</groupId>
 			<artifactId>jboss-as-jms-client-bom</artifactId>
 			<version>7.1.0.Final</version>
 			<type>pom</type>
+			<scope>provided</scope>
 		</dependency>
 
 	</dependencies>

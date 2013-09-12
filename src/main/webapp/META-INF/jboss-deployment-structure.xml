@@ -7,9 +7,11 @@ http://stackoverflow.com/questions/12039763/use-my-log4j-under-jboss-6
   <deployment>
     <exclusions>
         <module name="javax.faces.api" />
-        <!--   <module name="org.apache.log4j" />
-        <module name="org.apache.commons.logging" />
-        -->
+        <module name="javax.faces.api" slot="main" />
+        <module name="javax.faces.api" slot="1.2" />  
+        <module name="com.sun.jsf-impl" />
+		<module name="com.sun.jsf-impl" slot="main" />
+		<module name="com.sun.jsf-impl" slot="1.2" />
     </exclusions>
   </deployment>
 </jboss-deployment-structure>
